@@ -187,7 +187,7 @@ For more on these, please see this [vignette](https://cran.rstudio.com/web/packa
 Let's grab just the data for Vanderbilt, then look only at the average test scores and admit rate. We can use filter to look at all of the variables for Vanderbilt:
 
 ```{r filter_select_arrange}
-df%>%
+df %>%
   filter(instnm=="Vanderbilt University")
 ```
 
@@ -245,7 +245,10 @@ df%>%
 *Quick Exercise* Choose a different college and two different things about that college. Have R print the output.
 
 ```{r}
-# INSERT CODE HERE
+df %>% 
+  filter(instnm == "Yale University") %>% 
+  select(instnm, costt4_a, sat_avg) %>% 
+  print()
 ```
 
 ## Summarizing Data
@@ -264,7 +267,8 @@ df%>%
 *Quick Exercise* Summarize the average entering SAT scores in this dataset.
 
 ```{r}
-# INSERT CODE HERE
+df %>% 
+  summarize(mean_sat = mean(sat_avg,na.rm=TRUE))
 ```
 
 ## Combining Commands
@@ -288,13 +292,17 @@ df%>%
 *Quick Exercise* Calculate average earnings for schools where SAT\>1200
 
 ```{r}
-# INSERT CODE HERE
+df %>% 
+  filter(sat_avg>1200) %>% 
+  summarize(mean_topsat=mean(sat_avg,na.rm=TRUE))
 ```
 
 *Quick Exercise* Calculate the average debt for schools that admit over 50% of the students who apply.  
 
 ```{r}
-# INSERT CODE HERE
+df %>% 
+  filter(adm_rate>.5) %>% 
+  summarize(mean_debt=mean(grad_debt_mdn,na.rm=TRUE))
 ```
 
 ```{r,message=F,echo=F,warning=F,results='hide'}
